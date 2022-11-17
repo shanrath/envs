@@ -16,13 +16,14 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run a multi-line script
         run: |
+          cd webapp
           dotnet publish -c Release -o package
           cd package
           zip -r ../package.zip .
       - uses: actions/upload-artifact@v3
         with:
           name: package
-          path: package.zip
+          path: webapp/package.zip
         
   deploy_dev:
     needs: [build]
