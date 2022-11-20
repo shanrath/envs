@@ -1,5 +1,5 @@
 param location string = resourceGroup().location
-param environment string
+param appname string
 
 resource app_service_plan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: 'example-asp'
@@ -11,7 +11,7 @@ resource app_service_plan 'Microsoft.Web/serverfarms@2022-03-01' = {
 }
 
 resource app_service 'Microsoft.Web/sites@2022-03-01' = {
-  name: 'ws-envs-${environment}'
+  name: appname
   location: location
   properties: {
     serverFarmId: app_service_plan.id
