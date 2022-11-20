@@ -8,6 +8,10 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
 
   build:
@@ -46,13 +50,13 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az deployment group create -g betabit-workshop -f app-service.bicep
+            az deployment group create -g betabit-workshop-dev -f app-service.bicep -p appname=bbws-site-dev
 
       - name: Deploy app
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az webapp deploy -name dev-bb-ws-webapp -g betabit-workshop package.zip
+            az webapp deploy -name bbws-site-dev -g betabit-workshop-dev package.zip
               
   deploy_prod:
     needs: [deploy_dev]
