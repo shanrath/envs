@@ -28,6 +28,11 @@ jobs:
         with:
           name: package
           path: webapp/package.zip
+          
+      - uses: actions/upload-artifact@v3
+        with:
+          name: iac
+          path: app-service.bicep
         
   deploy_dev:
     needs: [build]
@@ -37,6 +42,11 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: package
+          path: ./
+          
+      - uses: actions/download-artifact@v3
+        with:
+          name: iac
           path: ./
           
       - name: Azure Login
@@ -50,13 +60,13 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az deployment group create -g betabit-workshop-dev -f app-service.bicep -p appname=bbws-site-dev
+            az deployment group create -g betabit-workshop-dev -f ./app-service.bicep -p appname=bbws-site-dev
 
       - name: Deploy app
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az webapp deploy -name bbws-site-dev -g betabit-workshop-dev package.zip
+            az webapp deploy -name bbws-site-dev -g betabit-workshop-dev ./package.zip
               
   deploy_prod:
     needs: [deploy_dev]
