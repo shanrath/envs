@@ -36,7 +36,9 @@ jobs:
         
   deploy_dev:
     needs: [build]
-    environment: Dev
+    environment: 
+      name: Dev
+      url: https://bbws-site-dev.azurewebsites.net
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
@@ -70,7 +72,9 @@ jobs:
               
   deploy_prod:
     needs: [deploy_dev]
-    environment: Prod
+    environment: 
+      name: Prod
+      url: https://bbws-site-prod.azurewebsites.net
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
