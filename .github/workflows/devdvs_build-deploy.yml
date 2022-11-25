@@ -31,12 +31,12 @@ jobs:
         uses: actions/upload-artifact@v3        
         with:          
           name: package          
-          path: /package.zip
+          path: package.zip
       - name: upload bicep
         uses: actions/upload-artifact@v3        
         with:          
           name: iac          
-          path: /app-service.bicep
+          path: app-service.bicep
 
 
     # do a checkout
